@@ -1,12 +1,12 @@
-# Multi-Branch Corporate Network — VLAN Segmentation with Extended ACL
+# 🏢 Multi-Branch Corporate Network — VLAN Segmentation with Extended ACL
 
 A simulated enterprise network built in Cisco Packet Tracer, demonstrating VLAN-based department isolation, inter-VLAN routing, centralized DHCP, and Extended ACL-based traffic filtering.
 
-## Overview
+## 📖 Overview
 
 This project simulates a small corporate network with two departments (HR and IT) that are logically separated using VLANs but can communicate through inter-VLAN routing configured on a central router. The network also includes automated IP assignment via DHCP and a security policy enforced through an Extended Access Control List.
 
-## Topology
+## 🗺️ Topology
 
 ```
                         +-------------+
@@ -32,17 +32,17 @@ This project simulates a small corporate network with two departments (HR and IT
 | Switch1 | Access switch | VLAN 20 (IT) | 192.168.20.0/24 |
 | Router0 | Router-on-a-Stick | Gateway for both VLANs | — |
 
-## Features Implemented
+## ✅ Features Implemented
 
-- **VLAN Segmentation** — HR (VLAN 10) and IT (VLAN 20) departments isolated at Layer 2
-- **802.1Q Trunking** — configured between each switch and the router
-- **Inter-VLAN Routing** — Router-on-a-Stick architecture using sub-interfaces (`Gi0/0.10`, `Gi0/1.20`)
-- **DHCP Services** — centralized IP address assignment for both VLANs via separate DHCP pools
-- **Extended ACL** — protocol and destination-specific traffic filtering (ICMP block between a specific host pair, rather than blanket source-based blocking)
+- 🔀 **VLAN Segmentation** — HR (VLAN 10) and IT (VLAN 20) departments isolated at Layer 2
+- 🔗 **802.1Q Trunking** — configured between each switch and the router
+- 🌐 **Inter-VLAN Routing** — Router-on-a-Stick architecture using sub-interfaces (`Gi0/0.10`, `Gi0/1.20`)
+- 📡 **DHCP Services** — centralized IP address assignment for both VLANs via separate DHCP pools
+- 🔒 **Extended ACL** — protocol and destination-specific traffic filtering (ICMP block between a specific host pair, rather than blanket source-based blocking)
 
-## Key Configuration
+## ⚙️ Key Configuration
 
-### VLAN + Trunk (per switch)
+### 🔀 VLAN + Trunk (per switch)
 ```
 vlan 10
 name HR
@@ -58,7 +58,7 @@ switchport mode trunk
 exit
 ```
 
-### Router Sub-interfaces
+### 🌐 Router Sub-interfaces
 ```
 interface gigabitEthernet 0/0.10
 encapsulation dot1Q 10
@@ -71,7 +71,7 @@ ip address 192.168.20.1 255.255.255.0
 exit
 ```
 
-### DHCP Pools
+### 📡 DHCP Pools
 ```
 ip dhcp excluded-address 192.168.10.1
 ip dhcp excluded-address 192.168.20.1
@@ -87,7 +87,7 @@ default-router 192.168.20.1
 dns-server 8.8.8.8
 ```
 
-### Extended ACL
+### 🔒 Extended ACL
 ```
 access-list 100 deny icmp host 192.168.20.10 host 192.168.10.10
 access-list 100 permit ip any any
@@ -96,7 +96,7 @@ interface gigabitEthernet 0/1.20
 ip access-group 100 out
 ```
 
-## Troubleshooting Log
+## 🔍 Troubleshooting Log
 
 During implementation, cross-VLAN connectivity failed even though the router's own sub-interfaces were reachable. A systematic elimination process was used to isolate the cause:
 
@@ -109,7 +109,7 @@ During implementation, cross-VLAN connectivity failed even though the router's o
 
 This highlighted that a fully correct router and switch configuration can still result in total connectivity failure if a downstream service (DHCP) is silently handing out bad values — and that layer-by-layer verification (router → switch → end host → DHCP) is the fastest way to isolate this kind of fault.
 
-## Verification
+## ✅ Verification
 
 | Test | Result |
 |---|---|
@@ -118,11 +118,11 @@ This highlighted that a fully correct router and switch configuration can still 
 | DHCP lease assignment (both VLANs) | ✅ Verified |
 | Extended ACL (blocked host pair) | ✅ Verified deny + verified unaffected hosts still pass |
 
-## Tools Used
+## 🛠️ Tools Used
 
 - Cisco Packet Tracer 9.0.1
 
-## Files
+## 📂 Files
 
 - `multi-branch-network.pkt` — Packet Tracer project file
 - `/screenshots` — configuration and verification screenshots
